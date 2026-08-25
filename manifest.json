@@ -1,0 +1,30 @@
+{
+  "name": "بيتزا بندق",
+  "short_name": "بيتزا بندق",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e67e00",
+  "orientation": "portrait",
+  "description": "المنيو الرسمي لـ بيتزا بندق - دي مهنتنا... صنعة أجدادنا",
+  "icons": [
+    {
+      "src": "images/logopondok.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logopondok.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logopondok.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
