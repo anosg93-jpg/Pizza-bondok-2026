@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="بيتزا بندق">
     <link rel="apple-touch-icon" href="images/logopondok.png">
+    <meta name="theme-color" content="#e67e00">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -19,7 +20,7 @@
             --bg: #f9f4ec; 
             --main-text: #2d1802; 
             --desc-text: #705843;
-            --accent: #e67e00; /* البرتقالي الدافئ الأساسي من اللوجو */
+            --accent: #e67e00; 
             --accent-hover: #cf6d00;
             --yellow-gold: #f5a623; 
             --white: #ffffff; 
@@ -146,7 +147,7 @@
         .extra-addon-text { font-size: 0.8rem; font-weight: 800; color: var(--main-text); display: flex; justify-content: space-between; width: 100%; align-items: center; }
         .extra-addon-price { color: var(--accent); font-weight: 900; }
 
-        /* إضافة الإضافات المتعددة لقسم فطير جر / رول بشكل كريتيف (Chips Grid) */
+        /* إضافة الإضافات المتعددة لقسم فطير جر / رول */
         .addons-title { font-size: 0.78rem; font-weight: 800; color: var(--accent); margin-top: 8px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
         .addons-chips-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
         .addon-chip {
@@ -186,7 +187,7 @@
         .install-text { font-weight: 700; font-size: 0.95rem; }
         .install-btn { background: #ffffff; color: var(--accent); border: none; padding: 8px 18px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
 
-        /* نافذة إرشاد الأيفون */
+        /* نافذة إرشاد الأيفون وسامسونج عند غياب الموجه المباشر */
         .ios-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; }
         .ios-content { background: var(--white); color: var(--main-text); padding: 25px; border-radius: 24px; text-align: center; max-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .ios-content h3 { margin-bottom: 12px; font-size: 1.1rem; color: var(--accent); }
@@ -271,7 +272,7 @@
     </div>
 
     <div id="iosPopup" class="ios-popup" onclick="if(event.target==this) this.style.display='none'">
-        <div class="ios-content">
+        <div class="ios-content" id="popupContent">
             <h3>تثبيت تطبيق بيتزا بندق للأيفون</h3>
             <p>اضغط على زر المشاركة السفلي <span style="font-size:1.2rem;"> Compartir ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
             <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
@@ -340,10 +341,9 @@
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
         let currentTotal = 0; 
-        let deferredPrompt;
+        let deferredPrompt = null;
         let selectedOrderType = 'delivery';
 
-        // قائمة إضافات قسم فطير جر / رول
         const FATER_ADDONS = [
             { name: 'تركي مدخن', price: 20 },
             { name: 'سلامي', price: 20 },
@@ -485,7 +485,6 @@
                 let defaultSize = '';
                 let basePrice = '0';
                 const isFteerHadeq = cleanCat.includes('فطير حادق') || cleanCat.includes('الفطير الحادق');
-                // التحقق من قسم فطير جر / رول
                 const isFteerJar = cleanCat.includes('فطير جر') || cleanCat.includes('فطير رول') || cleanCat.includes('جر') || cleanCat.includes('رول');
 
                 if (cleanCat.includes('بيتزا إيطالي') || cleanCat.includes('بيتزا ايطالي')) {
@@ -541,7 +540,6 @@
                     sizeButtonsHtml = '';
                 }
 
-                // الحشو الخارجي للفطير الحادق (+40 ج)
                 const addonFteerHadeqHtml = isFteerHadeq ? `
                     <label class="extra-addon-box">
                         <input type="checkbox" onchange="toggleExtraAddon(this)" id="addon_${index}">
@@ -552,7 +550,6 @@
                     </label>
                 ` : '';
 
-                // إضافات قسم فطير جر / رول الكريتيف
                 const addonsChipsHtml = isFteerJar ? `
                     <div class="addons-title">✨ اختار إضافاتك المفضلة:</div>
                     <div class="addons-chips-grid">
@@ -612,13 +609,11 @@
             const basePrice = parseFloat(card.dataset.basePrice) || 0;
             let extraPrice = 0;
 
-            // فحص خيار حشو الفطير الحادق
             const addonCheckbox = card.querySelector('.extra-addon-box input[type="checkbox"]');
             if (addonCheckbox && addonCheckbox.checked) {
                 extraPrice += 40;
             }
 
-            // فحص إضافات فطير جر / رول
             const selectedChips = card.querySelectorAll('.addon-chip.selected');
             selectedChips.forEach(chip => {
                 extraPrice += parseFloat(chip.dataset.price) || 0;
@@ -635,11 +630,9 @@
             const price = card.dataset.finalPrice || card.dataset.basePrice; 
             const category = card.dataset.category || '';
             
-            // قراءة خيارات الفطير الحادق
             const addonCheckbox = card.querySelector('.extra-addon-box input[type="checkbox"]');
             const hasHadeqAddon = addonCheckbox && addonCheckbox.checked;
 
-            // قراءة خيارات فطير جر / رول
             const selectedChips = card.querySelectorAll('.addon-chip.selected');
             let chosenAddons = [];
             selectedChips.forEach(chip => {
@@ -783,6 +776,7 @@
             window.open(`https://wa.me/201032030220?text=${encodeURIComponent(msg)}`);
         }
 
+        /* --- تحسين دعم الـ PWA لمعالجة متصفح سامسونج --- */
         function initPWA() {
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js').then(reg => {
@@ -797,13 +791,9 @@
                 }).catch(err => console.log('SW registration failed:', err));
             }
 
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-            if (!isStandalone) {
-                if (isIOS) {
-                    document.getElementById('install-bar').style.display = 'flex';
-                }
+            if (isStandalone) {
+                document.getElementById('install-bar').style.display = 'none';
             }
         }
 
@@ -815,8 +805,14 @@
 
         function triggerInstall() {
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isSamsung = /SamsungBrowser/i.test(navigator.userAgent);
             
             if (isIOS) {
+                document.getElementById('popupContent').innerHTML = `
+                    <h3>تثبيت تطبيق بيتزا بندق للأيفون</h3>
+                    <p>اضغط على زر المشاركة السفلي <span style="font-size:1.2rem;"> ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
+                    <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
+                `;
                 document.getElementById('iosPopup').style.display = 'flex';
             } else if (deferredPrompt) {
                 deferredPrompt.prompt();
@@ -826,11 +822,22 @@
                     }
                     deferredPrompt = null;
                 });
+            } else if (isSamsung) {
+                // إرشاد مستخدمي متصفح سامسونج في حال تعطيل التثبيت المباشر تلقائياً
+                document.getElementById('popupContent').innerHTML = `
+                    <h3>تثبيت التطبيق على هواتف سامسونج</h3>
+                    <p>اضغط على قائمة المتصفح <b>(≡)</b> أسفل الشاشة، ثم اختر <b>"إضافة الصفحة إلى"</b> ومنها اختر <b>"الشاشة الرئيسية"</b> لتثبيته فوراً بدون تحذيرات.</p>
+                    <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
+                `;
+                document.getElementById('iosPopup').style.display = 'flex';
+            } else {
+                alert("التطبيق مثبت بالفعل أو أن المتصفح لا يدعم التثبيت المباشر.");
             }
         }
 
         window.addEventListener('appinstalled', () => {
             document.getElementById('install-bar').style.display = 'none';
+            deferredPrompt = null;
         });
 
         loadMenu();
