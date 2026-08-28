@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بيتزا بندق | المنيو الرسمي</title>
     
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- وسم الأيفون والـ iOS لتشغيله كتطبيق كامل -->
+    <!-- دعم iOS / iPhone -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="بيتزا بندق">
@@ -135,7 +136,7 @@
         .size-btn { height: 32px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--accent); background: transparent; color: var(--main-text); font-weight: 800; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
         .size-btn.active { background: var(--accent); color: white; transform: scale(1.05); box-shadow: 0 4px 10px rgba(230, 126, 0, 0.25); }
         
-        /* خيار الحشو الخارجي (فطير حادق) */
+        /* خيار الحشو الخارجي */
         .extra-addon-box {
             display: flex; align-items: center;
             background: var(--tag-bg);
@@ -147,7 +148,7 @@
         .extra-addon-text { font-size: 0.8rem; font-weight: 800; color: var(--main-text); display: flex; justify-content: space-between; width: 100%; align-items: center; }
         .extra-addon-price { color: var(--accent); font-weight: 900; }
 
-        /* إضافة الإضافات المتعددة لقسم فطير جر / رول */
+        /* إضافة الإضافات المتعددة */
         .addons-title { font-size: 0.78rem; font-weight: 800; color: var(--accent); margin-top: 8px; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
         .addons-chips-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
         .addon-chip {
@@ -176,23 +177,24 @@
         .order-btn.added { background: var(--success-dark); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .fly-item { position: fixed; z-index: 9999; pointer-events: none; width: 30px; height: 30px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
 
-        /* شريط التثبيت */
+        /* --- شريط التثبيت المحسّن --- */
         #install-bar {
             position: fixed; bottom: 0; left: 0; width: 100%; background: var(--accent);
-            color: white; padding: 15px 20px; display: none; justify-content: space-between;
-            align-items: center; z-index: 1500; box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
+            color: white; padding: 14px 18px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1500; box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
             border-radius: 20px 20px 0 0; animation: slideUp 0.4s ease forwards;
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .install-text { font-weight: 700; font-size: 0.95rem; }
-        .install-btn { background: #ffffff; color: var(--accent); border: none; padding: 8px 18px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+        .install-text { font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .install-btn { background: #ffffff; color: var(--accent); border: none; padding: 9px 20px; border-radius: 12px; font-weight: 900; font-size: 0.88rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s; }
+        .install-btn:active { transform: scale(0.95); }
 
-        /* نافذة إرشاد الأيفون وسامسونج عند غياب الموجه المباشر */
-        .ios-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .ios-content { background: var(--white); color: var(--main-text); padding: 25px; border-radius: 24px; text-align: center; max-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .ios-content h3 { margin-bottom: 12px; font-size: 1.1rem; color: var(--accent); }
-        .ios-content p { font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; line-height: 1.5; }
-        .ios-close { background: var(--accent); color: white; border: none; padding: 6px 20px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+        /* نافذة إرشاد التثبيت للأيفون والجوالات */
+        .ios-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+        .ios-content { background: var(--white); color: var(--main-text); padding: 25px; border-radius: 24px; text-align: center; max-width: 340px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); direction: rtl; }
+        .ios-content h3 { margin-bottom: 12px; font-size: 1.15rem; color: var(--accent); font-weight: 800; }
+        .ios-content p { font-size: 0.92rem; margin-bottom: 18px; font-weight: 700; line-height: 1.6; color: var(--desc-text); }
+        .ios-close { background: var(--accent); color: white; border: none; padding: 10px 24px; border-radius: 12px; cursor: pointer; font-weight: 800; width: 100%; font-size: 0.95rem; }
 
         /* --- Footer --- */
         .restaurant-footer { padding: 30px 20px; text-align: center; background: var(--white); border-top: 1px solid rgba(0,0,0,0.05); margin-top: 25px; }
@@ -266,15 +268,17 @@
     <div class="category-nav" id="catNav"></div>
     <div id="menuList" class="menu-list"></div>
 
+    <!-- شريط تثبيت التطبيق المفعل دائماً -->
     <div id="install-bar">
-        <span class="install-text">📱 تثبيت ابلكيشن بيتزا بندق الآن</span>
+        <span class="install-text">📱 تثبيت تطبيق بيتزا بندق الآن</span>
         <button class="install-btn" onclick="triggerInstall()">تثبيت</button>
     </div>
 
+    <!-- نافذة الإرشاد للأنظمة التي لا تدعم التثبيت المباشر برمجياً -->
     <div id="iosPopup" class="ios-popup" onclick="if(event.target==this) this.style.display='none'">
         <div class="ios-content" id="popupContent">
             <h3>تثبيت تطبيق بيتزا بندق للأيفون</h3>
-            <p>اضغط على زر المشاركة السفلي <span style="font-size:1.2rem;"> Compartir ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
+            <p>اضغط على زر المشاركة السفلي <span style="font-size:1.2rem;"> ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
             <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
         </div>
     </div>
@@ -455,6 +459,7 @@
             } catch (e) { 
                 setTimeout(() => {
                     document.getElementById('splash-screen').classList.add('splash-hidden');
+                    initPWA();
                 }, 4000);
             }
         }
@@ -776,27 +781,22 @@
             window.open(`https://wa.me/201032030220?text=${encodeURIComponent(msg)}`);
         }
 
-        /* --- تحسين دعم الـ PWA لمعالجة متصفح سامسونج --- */
+        /* --- نظام التثبيت الشامل الخالي من الأخطاء --- */
         function initPWA() {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js').then(reg => {
-                    reg.addEventListener('updatefound', () => {
-                        const newWorker = reg.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                window.location.reload();
-                            }
-                        });
-                    });
-                }).catch(err => console.log('SW registration failed:', err));
+                navigator.serviceWorker.register('sw.js').catch(() => {});
             }
 
+            // إخفاء شريط التثبيت فقط إذا كان التطبيق مثبت ومفتوح كتطبيق مستقل بالفعل
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
             if (isStandalone) {
                 document.getElementById('install-bar').style.display = 'none';
+            } else {
+                document.getElementById('install-bar').style.display = 'flex';
             }
         }
 
+        // لالتقاط موجه التثبيت المباشر من الأندرويد ومتصفحات كروم
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -804,17 +804,11 @@
         });
 
         function triggerInstall() {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            const isSamsung = /SamsungBrowser/i.test(navigator.userAgent);
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+            const isSamsung = /SamsungBrowser/i.test(userAgent);
             
-            if (isIOS) {
-                document.getElementById('popupContent').innerHTML = `
-                    <h3>تثبيت تطبيق بيتزا بندق للأيفون</h3>
-                    <p>اضغط على زر المشاركة السفلي <span style="font-size:1.2rem;"> ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
-                    <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
-                `;
-                document.getElementById('iosPopup').style.display = 'flex';
-            } else if (deferredPrompt) {
+            if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
@@ -822,16 +816,28 @@
                     }
                     deferredPrompt = null;
                 });
+            } else if (isIOS) {
+                document.getElementById('popupContent').innerHTML = `
+                    <h3>تثبيت تطبيق بيتزا بندق للأيفون</h3>
+                    <p>اضغط على زر المشاركة السفلي <span style="font-size:1.3rem;"> ⇧</span> في متصفح Safari، ثم اختر <b>"إضافة إلى الشاشة الرئيسية ➕"</b>.</p>
+                    <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
+                `;
+                document.getElementById('iosPopup').style.display = 'flex';
             } else if (isSamsung) {
-                // إرشاد مستخدمي متصفح سامسونج في حال تعطيل التثبيت المباشر تلقائياً
                 document.getElementById('popupContent').innerHTML = `
                     <h3>تثبيت التطبيق على هواتف سامسونج</h3>
-                    <p>اضغط على قائمة المتصفح <b>(≡)</b> أسفل الشاشة، ثم اختر <b>"إضافة الصفحة إلى"</b> ومنها اختر <b>"الشاشة الرئيسية"</b> لتثبيته فوراً بدون تحذيرات.</p>
+                    <p>اضغط على قائمة المتصفح <b>(≡)</b> أسفل الشاشة، ثم اختر <b>"إضافة الصفحة إلى"</b> ومنها اختر <b>"الشاشة الرئيسية"</b> لتثبيته فوراً.</p>
                     <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">حسناً</button>
                 `;
                 document.getElementById('iosPopup').style.display = 'flex';
             } else {
-                alert("التطبيق مثبت بالفعل أو أن المتصفح لا يدعم التثبيت المباشر.");
+                // في حال عدم توفر الموجه المباشر على الأندرويد، إعطاء توجيه سلس
+                document.getElementById('popupContent').innerHTML = `
+                    <h3>تثبيت تطبيق بيتزا بندق</h3>
+                    <p>اضغط على خيارات المتصفح (الثلاث نقاط <b>⋮</b> بالأعلى)، ثم اختر <b>"التثبيت كـ تطبيق"</b> أو <b>"إضافة إلى الشاشة الرئيسية"</b>.</p>
+                    <button class="ios-close" onclick="document.getElementById('iosPopup').style.display='none'">فهمت</button>
+                `;
+                document.getElementById('iosPopup').style.display = 'flex';
             }
         }
 

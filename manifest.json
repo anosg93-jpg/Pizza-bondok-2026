@@ -1,20 +1,24 @@
 {
-  "name": "بيتزا بندق",
+  "name": "بيتزا بندق | المنيو الرسمي",
   "short_name": "بيتزا بندق",
+  "description": "منيو بيتزا بندق - الطلب المباشر عبر الواتساب",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f9f4ec",
   "theme_color": "#e67e00",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "images/logopondok.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "images/logopondok.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
